@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Shifumi</title>
+    <meta name="description" content="Pierre, feuille, ciseaux en pixel art : envoie un lien à un ami et affrontez-vous." />
+    <meta property="og:title" content="Shifumi — viens jouer !" />
+    <meta property="og:description" content="Pierre, feuille, ciseaux en pixel art. Clique sur le lien pour m'affronter." />
+    <meta name="theme-color" content="#ece5d5" />
+    <link rel="preload" href="fonts/silkscreen-400.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="top">
+        <a class="logo" href="./" id="logo">Shifumi</a>
+        <button class="icon-btn" id="btn-sound" type="button" aria-pressed="true" aria-label="Son">
+          <svg viewBox="0 0 11 9" aria-hidden="true">
+            <path d="M0 3h2v3H0zM2 2h1v5H2zM3 1h1v7H3zM4 0h1v9H4z" />
+            <path class="waves" d="M6 3h1v3H6zM8 1h1v1H8zM9 2h1v5H9zM8 7h1v1H8z" />
+            <path class="mute" d="M6 2h1v1H6zM7 3h1v1H7zM8 4h1v1H8zM9 5h1v1H9zM10 6h1v1h-1zM10 2h1v1h-1zM9 3h1v1H9zM7 5h1v1H7zM6 6h1v1H6z" />
+          </svg>
+        </button>
+      </header>
+
+      <div class="scoreboard" id="scoreboard" hidden>
+        <div class="player me">
+          <span class="name" id="name-me">Toi</span>
+          <span class="pts" id="pts-me">0</span>
+        </div>
+        <div class="target">premier à <span id="target">3</span></div>
+        <div class="player them">
+          <span class="pts" id="pts-them">0</span>
+          <span class="name" id="name-them">???</span>
+        </div>
+      </div>
+
+      <div class="stage-wrap" id="stage-wrap">
+        <div class="frame">
+          <canvas id="stage" width="128" height="80" role="img" aria-label="Deux mains face à face"></canvas>
+        </div>
+      </div>
+
+      <section class="panel" id="panel-home">
+        <p class="lead">Pierre, feuille, ciseaux.<br />Envoie un lien, affronte tes amis.</p>
+        <label class="field">
+          <span>Ton pseudo</span>
+          <input id="in-name" maxlength="12" autocomplete="nickname" spellcheck="false" placeholder="Anonyme" />
+        </label>
+        <button class="btn primary" id="btn-create" type="button">Créer une partie</button>
+        <button class="btn link" id="btn-solo" type="button">S'entraîner contre l'ordi</button>
+      </section>
+
+      <section class="panel" id="panel-join" hidden>
+        <p class="lead">On t'a invité à une partie !</p>
+        <label class="field">
+          <span>Ton pseudo</span>
+          <input id="in-name-join" maxlength="12" autocomplete="nickname" spellcheck="false" placeholder="Anonyme" />
+        </label>
+        <button class="btn primary" id="btn-join" type="button">Rejoindre</button>
+        <button class="btn link" data-action="home" type="button">Retour</button>
+      </section>
+
+      <section class="panel" id="panel-lobby" hidden>
+        <p class="lead" id="lobby-lead">Envoie ce lien à ton adversaire :</p>
+        <div class="linkbox">
+          <input id="invite-url" readonly aria-label="Lien d'invitation" />
+          <button class="btn small" id="btn-copy" type="button">Copier</button>
+        </div>
+        <button class="btn" id="btn-share" type="button" hidden>Partager</button>
+        <p class="status" id="lobby-status" role="status" aria-live="polite"></p>
+        <button class="btn link" data-action="home" type="button">Annuler</button>
+      </section>
+
+      <section class="panel" id="panel-play" hidden>
+        <div class="choices" role="group" aria-label="Ton choix">
+          <button class="choice" type="button" data-shape="rock"><canvas aria-hidden="true"></canvas><span>Pierre</span><kbd>1</kbd></button>
+          <button class="choice" type="button" data-shape="paper"><canvas aria-hidden="true"></canvas><span>Feuille</span><kbd>2</kbd></button>
+          <button class="choice" type="button" data-shape="scissors"><canvas aria-hidden="true"></canvas><span>Ciseaux</span><kbd>3</kbd></button>
+        </div>
+        <p class="status" id="play-status" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="panel" id="panel-over" hidden>
+        <p class="lead" id="over-title"></p>
+        <button class="btn primary" id="btn-rematch" type="button">Revanche</button>
+        <p class="status" id="over-status" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="panel" id="panel-error" hidden>
+        <p class="lead" id="error-text"></p>
+        <button class="btn primary" data-action="home" type="button">Retour à l'accueil</button>
+      </section>
+
+      <footer class="foot">
+        <button class="btn link" id="btn-quit" data-action="home" type="button" hidden>Quitter la partie</button>
+      </footer>
+    </main>
+    <div class="toast" id="toast" role="alert" hidden></div>
+    <script src="vendor/peerjs.min.js" defer></script>
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>
